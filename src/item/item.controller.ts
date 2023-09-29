@@ -1,4 +1,7 @@
-import { Get, Controller } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { ItemService } from "./item.service";
 
 @Controller('item')
-export class ItemController {}
+export class ItemController {
+  constructor(private itemService: ItemService) {}
+}
