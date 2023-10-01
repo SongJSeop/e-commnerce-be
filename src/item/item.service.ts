@@ -6,7 +6,7 @@ import { v1 as uuid } from 'uuid';
 export class ItemService {
 
   private items: Item[] = [{
-    id: 1,
+    id: "zz",
     name: 'Burger',
     price: 5.99,
     category: 'Food',
@@ -14,11 +14,11 @@ export class ItemService {
     image: "https://www.publicdomainpictures.net/pictures/270000/velka/burger-1553429729kTU.jpg",
     rating: 4.5,
     quantity: 10,
-    uploaddate: "2020-01-01",
+    uploaddate: new Date("2020-01-01"),
     reviews: "It's a good burger",
     status: ItemStatus.FORSALE,
   }, {
-    id: 2,
+    id: "xx",
     name: 'Omelette',
     price: 6.99,
     category: 'Food',
@@ -26,7 +26,7 @@ export class ItemService {
     image: "https://www.publicdomainpictures.net/pictures/320000/velka/background-image.png",
     rating: 4.5,
     quantity: 10,
-    uploaddate: "2020-01-01",
+    uploaddate: new Date("2020-01-01"),
     reviews: "It's a good omelette",
     status: ItemStatus.FORSALE,
   }];
@@ -35,7 +35,7 @@ export class ItemService {
     return this.items;
   }
 
-  addItem(itemData) {
+  addItem(itemData): Item {
     const newItem: Item = {
       id: uuid(),
       name: itemData.name,
@@ -46,10 +46,11 @@ export class ItemService {
       rating: itemData.rating,
       quantity: itemData.quantity,
       uploaddate: new Date(),
-      reviews: [],
+      reviews: "test",
       status: ItemStatus.FORSALE,
     }
 
     this.items.push(newItem);
+    return newItem;
   }
 }

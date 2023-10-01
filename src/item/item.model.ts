@@ -7,7 +7,7 @@ export interface Item {
   image: string;
   rating: number;
   quantity: number;
-  uploaddate: string;
+  uploaddate: Date;
   status: ItemStatus;
   reviews: string;
 }
