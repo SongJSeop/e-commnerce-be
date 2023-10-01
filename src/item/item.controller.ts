@@ -9,6 +9,11 @@ export class ItemController {
 
   @Get()
   getAllItems(): Item[] {
-    return this.itemService.getAllItems();
+      return this.itemService.getAllItems();
+  }
+
+  @Post("/add")
+  addItem(@Body() itemData) {
+      return this.itemService.addItem(itemData);
   }
 }

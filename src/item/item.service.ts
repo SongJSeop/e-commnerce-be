@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Item, ItemStatus } from "./item.model";
+import { v1 as uuid } from 'uuid';
 
 @Injectable()
 export class ItemService {
@@ -11,9 +12,9 @@ export class ItemService {
     category: 'Food',
     description: "It's a burger",
     image: "https://www.publicdomainpictures.net/pictures/270000/velka/burger-1553429729kTU.jpg",
-    uploaddate: "2020-01-01",
-    quantity: 10,
     rating: 4.5,
+    quantity: 10,
+    uploaddate: "2020-01-01",
     reviews: "It's a good burger",
     status: ItemStatus.FORSALE,
   }, {
@@ -23,14 +24,32 @@ export class ItemService {
     category: 'Food',
     description: "A delicious omelette with cheese and ham.",
     image: "https://www.publicdomainpictures.net/pictures/320000/velka/background-image.png",
-    uploaddate: "2020-01-01",
-    quantity: 10,
     rating: 4.5,
+    quantity: 10,
+    uploaddate: "2020-01-01",
     reviews: "It's a good omelette",
     status: ItemStatus.FORSALE,
   }];
 
   getAllItems(): Item[] {
     return this.items;
+  }
+
+  addItem(itemData) {
+    const newItem: Item = {
+      id: uuid(),
+      name: itemData.name,
+      price: itemData.price,
+      category: itemData.category,
+      description: itemData.description,
+      image: itemData.image,
+      rating: itemData.rating,
+      quantity: itemData.quantity,
+      uploaddate: new Date(),
+      reviews: [],
+      status: ItemStatus.FORSALE,
+    }
+
+    this.items.push(newItem);
   }
 }

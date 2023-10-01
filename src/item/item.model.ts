@@ -1,15 +1,15 @@
 export interface Item {
-  id: number;
+  id: string;
   name: string;
   price: number;
   category: string;
   description: string;
   image: string;
-  uploaddate: string;
-  quantity: number;
   rating: number;
-  reviews: string;
+  quantity: number;
+  uploaddate: string;
   status: ItemStatus;
+  reviews: string;
 }
 
 export enum ItemStatus {
