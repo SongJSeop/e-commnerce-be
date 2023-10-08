@@ -1,6 +1,7 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
     Param,
     Post,
@@ -29,5 +30,10 @@ export class BoardController {
     @Get('/:id')
     findBoardById(@Param('id') id: string): Board {
         return this.boardService.findBoardById(id);
+    }
+
+    @Delete('/:id')
+    deleteBoardById(@Param('id') id: string): void {
+        this.boardService.deleteBoardById(id);
     }
 }
