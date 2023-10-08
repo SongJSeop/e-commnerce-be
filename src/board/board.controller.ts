@@ -4,13 +4,15 @@ import {
     Delete,
     Get,
     Param,
+    Patch,
     Post,
     UsePipes,
     ValidationPipe,
 } from '@nestjs/common';
 import { BoardService } from './board.service';
-import { Board } from './board.model';
-import { CreateBoardDto } from './dto/create-board.dto';
+import { Board, BoardStatus } from './board.model';
+import { CreateBoardDto } from './dto/createBoard.dto';
+import { BoardStatusValidationPipe } from './pipes/boardStatusValidation.pipe';
 
 @Controller('board')
 export class BoardController {
@@ -35,5 +37,13 @@ export class BoardController {
     @Delete('/:id')
     deleteBoardById(@Param('id') id: string): void {
         this.boardService.deleteBoardById(id);
+    }
+
+    @Patch('/:id/status')
+    updateBoardStatusById(
+        @Param('id') id: string,
+        @Body('status', BoardStatusValidationPipe) status: BoardStatus,
+    ): Board {
+        return this.boardService.updateBoardStatusById(id, status);
     }
 }
