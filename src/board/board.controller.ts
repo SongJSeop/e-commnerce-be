@@ -14,6 +14,7 @@ import { Board } from './board.entity';
 import { BoardStatus } from './board-status.enum';
 import { CreateBoardDto } from './dto/createBoard.dto';
 import { BoardStatusValidationPipe } from './pipes/boardStatusValidation.pipe';
+import { DeleteResult } from 'typeorm';
 
 @Controller('board')
 export class BoardController {
@@ -36,8 +37,8 @@ export class BoardController {
     }
 
     @Delete('/:id')
-    deleteBoardById(@Param('id') id: number): void {
-        this.boardService.deleteBoardById(id);
+    deleteBoardById(@Param('id') id: number): Promise<DeleteResult> {
+        return this.boardService.deleteBoardById(id);
     }
 
     @Patch('/:id/status')
