@@ -13,5 +13,5 @@ export class Board extends BaseEntity {
     description: string;
 
     @Column()
-    status: BoardStatus;
+    status: BoardStatus = BoardStatus.PUBLIC;
 }
