@@ -19,7 +19,11 @@ export class BoardService {
 
     async createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
         const { title, description } = createBoardDto;
-        const board = this.boardRepository.create({ title, description });
+        const board = this.boardRepository.create({
+            title,
+            description,
+            status: BoardStatus.PUBLIC,
+        });
         await this.boardRepository.save(board);
         return board;
     }
