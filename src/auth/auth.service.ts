@@ -3,6 +3,7 @@ import { UserRepository } from './user.repository';
 import { User } from './user.entity';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { DeleteResult } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -13,6 +14,8 @@ export class AuthService {
     }
 
     async signUp(authCredentialsDto: AuthCredentialsDto): Promise<User> {
+        const hash: string = await bcrypt.hash(authCredentialsDto.password, 10);
+        authCredentialsDto.password = hash;
         return this.userRepository.createUser(authCredentialsDto);
     }
 
