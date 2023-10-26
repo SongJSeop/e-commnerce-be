@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { User } from './user.entity';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
@@ -17,6 +17,17 @@ export class AuthService {
         const hash: string = await bcrypt.hash(authCredentialsDto.password, 10);
         authCredentialsDto.password = hash;
         return this.userRepository.createUser(authCredentialsDto);
+    }
+
+    async signIn(authCredentialsDto: AuthCredentialsDto): Promise<User> {
+        const { username, password } = authCredentialsDto;
+        const user = await this.userRepository.findOneBy({ username });
+
+        if (user && (await bcrypt.compare(password, user.password))) {
+            return user;
+        } else {
+            throw new UnauthorizedException('login failed');
+        }
     }
 
     async deleteUserById(id: number): Promise<DeleteResult> {

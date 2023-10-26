@@ -29,6 +29,13 @@ export class AuthController {
         return this.authService.signUp(authCredentialsDto);
     }
 
+    @Post('/signin')
+    signIn(
+        @Body(ValidationPipe) authCredentialsDto: AuthCredentialsDto,
+    ): Promise<User> {
+        return this.authService.signIn(authCredentialsDto);
+    }
+
     @Delete('/:id')
     deleteUserById(
         @Param('id', ParseIntPipe) id: number,
