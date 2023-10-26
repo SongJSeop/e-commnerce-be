@@ -32,7 +32,7 @@ export class AuthController {
     @Post('/signin')
     signIn(
         @Body(ValidationPipe) authCredentialsDto: AuthCredentialsDto,
-    ): Promise<User> {
+    ): Promise<{ token: string }> {
         return this.authService.signIn(authCredentialsDto);
     }
 
