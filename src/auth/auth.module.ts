@@ -7,6 +7,7 @@ import { UserRepository } from './user.repository';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { configDotenv } from 'dotenv';
+import { JwtStrategy } from './jwt.strategy';
 configDotenv();
 
 @Module({
@@ -21,6 +22,7 @@ configDotenv();
         TypeOrmModule.forFeature([User]),
     ],
     controllers: [AuthController],
-    providers: [AuthService, UserRepository],
+    providers: [AuthService, UserRepository, JwtStrategy],
+    exports: [JwtStrategy, PassportModule],
 })
 export class AuthModule {}
