@@ -4,7 +4,7 @@ import { Board } from './board.entity';
 import { CreateBoardDto } from './dto/createBoard.dto';
 import { BoardStatus } from './board-status.enum';
 import { BoardRepository } from './board.repository';
-import { DeleteResult } from 'typeorm';
+import { DeleteResult, SelectQueryBuilder } from 'typeorm';
 import { User } from '../auth/user.entity';
 
 @Injectable()
@@ -19,7 +19,8 @@ export class BoardService {
     }
 
     async findBoardsByUser(user: User): Promise<Board[]> {
-        const query = this.boardRepository.createQueryBuilder('board');
+        const query: SelectQueryBuilder<Board> =
+            this.boardRepository.createQueryBuilder('board');
 
         query.where('board.userId = :userId', { userId: user.id });
 
@@ -41,8 +42,8 @@ export class BoardService {
         createBoardDto: CreateBoardDto,
         user: User,
     ): Promise<Board> {
-        const { title, description } = createBoardDto;
-        const board = this.boardRepository.create({
+        const { title, description }: CreateBoardDto = createBoardDto;
+        const board: Board = this.boardRepository.create({
             title,
             description,
             status: BoardStatus.PUBLIC,
