@@ -53,8 +53,17 @@ export class BoardService {
         return board;
     }
 
-    async deleteBoardById(id: number): Promise<DeleteResult> {
-        return await this.boardRepository.delete(id);
+    async deleteBoardById(id: number, user: User): Promise<DeleteResult> {
+        const result: DeleteResult = await this.boardRepository.delete({
+            id,
+            user: { id: user.id },
+        });
+
+        if (result.affected === 0) {
+            throw new NotFoundException(`Can't Find Board With id ${id}`);
+        }
+
+        return result;
     }
 
     async updateBoardStatusById(
