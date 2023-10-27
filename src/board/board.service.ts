@@ -5,6 +5,7 @@ import { CreateBoardDto } from './dto/createBoard.dto';
 import { BoardStatus } from './board-status.enum';
 import { BoardRepository } from './board.repository';
 import { DeleteResult } from 'typeorm';
+import { User } from '../auth/user.entity';
 
 @Injectable()
 export class BoardService {
@@ -17,12 +18,16 @@ export class BoardService {
         return await this.boardRepository.find();
     }
 
-    async createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
+    async createBoard(
+        createBoardDto: CreateBoardDto,
+        user: User,
+    ): Promise<Board> {
         const { title, description } = createBoardDto;
         const board = this.boardRepository.create({
             title,
             description,
             status: BoardStatus.PUBLIC,
+            user,
         });
         await this.boardRepository.save(board);
         return board;
