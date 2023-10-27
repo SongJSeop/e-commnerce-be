@@ -31,6 +31,16 @@ export class BoardController {
         return this.boardService.findAllBoards();
     }
 
+    @Get('/byuser')
+    findBoardsByUser(@GetUser() user: User): Promise<Board[]> {
+        return this.boardService.findBoardsByUser(user);
+    }
+
+    @Get('/:id')
+    findBoardById(@Param('id', ParseIntPipe) id: number): Promise<Board> {
+        return this.boardService.findBoardById(id);
+    }
+
     @Post()
     @UsePipes(ValidationPipe)
     createBoard(
@@ -38,11 +48,6 @@ export class BoardController {
         @GetUser() user: User,
     ): Promise<Board> {
         return this.boardService.createBoard(createBoardDto, user);
-    }
-
-    @Get('/:id')
-    findBoardById(@Param('id', ParseIntPipe) id: number): Promise<Board> {
-        return this.boardService.findBoardById(id);
     }
 
     @Delete('/:id')
