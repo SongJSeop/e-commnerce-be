@@ -1,8 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { INestApplication, Logger } from '@nestjs/common';
-import { configDotenv } from 'dotenv';
-configDotenv();
 
 async function bootstrap(): Promise<void> {
     const app: INestApplication = await NestFactory.create(AppModule);
