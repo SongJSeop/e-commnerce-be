@@ -3,6 +3,7 @@ import {
     Controller,
     Delete,
     Get,
+    Logger,
     Param,
     ParseIntPipe,
     Patch,
@@ -24,6 +25,7 @@ import { User } from '../auth/user.entity';
 @Controller('board')
 @UseGuards(AuthGuard())
 export class BoardController {
+    logger = new Logger('Board');
     constructor(private boardService: BoardService) {}
 
     @Get()
@@ -33,6 +35,9 @@ export class BoardController {
 
     @Get('/byuser')
     findBoardsByUser(@GetUser() user: User): Promise<Board[]> {
+        this.logger.verbose(
+            `유저 "${user.username}"가 본인의 모든 게시물을 조회합니다.`,
+        );
         return this.boardService.findBoardsByUser(user);
     }
 

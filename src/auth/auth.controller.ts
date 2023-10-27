@@ -9,6 +9,7 @@ import {
     ParseIntPipe,
     Req,
     UseGuards,
+    Logger,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
@@ -19,6 +20,7 @@ import { GetUser } from './get-user.decorator';
 
 @Controller('auth')
 export class AuthController {
+    private logger = new Logger('Auth');
     constructor(private authService: AuthService) {}
 
     @Get()
@@ -30,6 +32,9 @@ export class AuthController {
     signUp(
         @Body(ValidationPipe) authCredentialsDto: AuthCredentialsDto,
     ): Promise<User> {
+        this.logger.verbose(
+            `- 유저 "${authCredentialsDto.username}"가 회원가입을 시도합니다.`,
+        );
         return this.authService.signUp(authCredentialsDto);
     }
 
